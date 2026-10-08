@@ -1,0 +1,17 @@
+.portfolio-polish { --muted-foreground: 0 0% 44%; }
+.bits-card-effects { perspective:1000px; }
+.bits-card-surface { position:relative; transform:rotateX(var(--bits-rx,0deg)) rotateY(var(--bits-ry,0deg)); transition:transform .3s ease; border-radius:24px; }
+.bits-card-glare { position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:30; opacity:0; background:radial-gradient(350px circle at var(--bits-x,50%) var(--bits-y,50%),rgb(180 200 255 / .18),transparent 65%); transition:opacity .3s; }
+.bits-card-effects:focus-within .bits-card-glare { opacity:.5; }
+.portfolio-polish .liquid-glass { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(50px) saturate(200%); -webkit-backdrop-filter: blur(50px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+.portfolio-polish .profile-actions a { display:flex; align-items:center; justify-content:center; gap:9px; min-height:44px; border:1px solid rgba(255, 255, 255, 0.5); border-radius:12px; background:rgba(255, 255, 255, 0.5); backdrop-filter:blur(50px); -webkit-backdrop-filter:blur(50px); font-size:11px; font-weight:600; color:#3a3a3c; transition:background .2s, border-color .2s, transform .2s; }
+.portfolio-polish .profile-actions a:last-child { background:#1d1d1f; color:white; border-color:transparent; }
+.portfolio-polish .profile-actions a:last-child:hover { background:#000; }
+.portfolio-polish .social-row { min-height:64px; }
+.portfolio-polish .project-detail-card { box-shadow:0 10px 40px rgb(0 0 0 / .06); }
+.portfolio-polish .profile-actions a:hover { background:rgba(255,255,255,0.95); border-color:rgba(0,0,0,0.12); transform:translateY(-2px); }
+.portfolio-polish a:focus-visible,.portfolio-polish button:focus-visible { outline:2px solid #007AFF; outline-offset:4px; }
+.portfolio-polish .liquid-glass-inner { transition:background .2s, border-color .2s, transform .2s; }
+.portfolio-polish #projects { scroll-margin-top:24px; }
+@media(max-width:380px) { .portfolio-polish .profile-panel { padding:20px; } .portfolio-polish h1 { font-size:25px; } }
+@media(prefers-reduced-motion:reduce) { .portfolio-polish *, .portfolio-polish *::before { animation:none!important; transition:none!important; } .portfolio-polish video { display:none; } }
