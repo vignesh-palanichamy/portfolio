@@ -1,0 +1,16 @@
+.signature-intro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#fff;color:#141414;opacity:1;transition:opacity .65s cubic-bezier(.4,0,.2,1);overflow:hidden}
+.signature-intro--leaving{opacity:0;pointer-events:none}
+.signature-intro-art{width:min(68vw,620px);text-align:center;transform:translateY(-12px)}
+.signature-intro-svg{display:block;width:100%;height:auto;overflow:visible}
+.signature-ink-reveal{stroke-dasharray:1;stroke-dashoffset:1;opacity:0;animation:signature-write var(--stroke-duration) linear var(--stroke-delay) forwards}
+.signature-ink-finish{opacity:0;animation:signature-finish .25s ease 3.9s forwards}
+.signature-intro-caption{font-family:"Segoe UI",sans-serif;font-size:clamp(11px,1.5vw,13px);font-weight:400;letter-spacing:.04em;color:#777;margin:22px 0 0;opacity:0;animation:signature-caption .7s ease 3s forwards}
+.signature-intro-skip{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));right:clamp(24px,5vw,64px);min-height:44px;display:flex;align-items:center;gap:14px;font-size:12px;color:#767676;padding:0 14px;border-radius:30px;transition:background .2s}
+.signature-intro-skip:hover{background:#f3f3f3;color:#111}.signature-intro-skip:focus-visible{outline:2px solid #777;outline-offset:3px}
+.signature-intro-replay{position:relative;z-index:20;display:flex;gap:7px;align-items:center;justify-content:center;margin:0 auto 24px;min-height:44px;padding:0 14px;color:#888;font-size:11px;border-radius:30px}.signature-intro-replay:hover{background:rgba(0,0,0,0.04);color:#333}
+@keyframes signature-write{from{opacity:1;stroke-dashoffset:1}to{opacity:1;stroke-dashoffset:0}}
+@keyframes signature-finish{to{opacity:1}}
+@keyframes signature-caption{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.signature-intro--still .signature-ink-reveal{animation:none;stroke-dashoffset:0;opacity:1}.signature-intro--still .signature-ink-finish{animation:none;opacity:1}.signature-intro--still .signature-intro-caption{animation:none;opacity:1}
+@media(max-width:600px){.signature-intro-art{width:84vw}.signature-intro-caption{margin-top:26px}}
+@media(prefers-reduced-motion:reduce){.signature-intro{transition:none}.signature-ink-reveal{animation:none;stroke-dashoffset:0;opacity:1}.signature-ink-finish{animation:none;opacity:1}.signature-intro-caption{animation:none;opacity:1}}
