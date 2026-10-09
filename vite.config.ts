@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: true,
     port: 3000,
+    allowedHosts: ["megatron.tailf35758.ts.net"],
   },
   plugins: [
     react(),
