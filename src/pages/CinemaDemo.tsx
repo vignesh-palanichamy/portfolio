@@ -76,7 +76,7 @@ export default function CinemaDemo(){
   },[motion]);
   return <main ref={root} className={`cd-demo ${motion?'':'cd-still'}`}>
     {motion&&<div className="cd-opening" aria-hidden="true"><img className="cd-signature" src={signature} alt=""/><span>A LITTLE OF ME. IN EVERYTHING I BUILD.</span></div>}
-    <header className="cd-nav" id="top"><Link to="/projects">PROJECTS ↗</Link><span>VIGNESH / PORTFOLIO</span><button onClick={()=>setMotion(v=>!v)} aria-pressed={motion}>{motion?<Pause size={16}/>:<Play size={16}/>} Motion {motion?'on':'off'}</button></header>
+    <header className="cd-nav" id="top"><Link to="/projects">PROJECTS ↗</Link><button onClick={()=>setMotion(v=>!v)} aria-pressed={motion}>{motion?<Pause size={16}/>:<Play size={16}/>} Motion {motion?'on':'off'}</button></header>
     <section className="cd-flight" aria-label="Cinematic introduction"><div className="cd-stage">
       <div className="cd-tunnel" aria-hidden="true"><VLogo motion={motion} tiltEnabled={tiltEnabled}/></div>
       <NameReveal/>
