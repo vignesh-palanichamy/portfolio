@@ -4,59 +4,111 @@ import { gsap } from 'gsap';
 const contour = 'M -110 -125 C -80 -151 83 -147 110 -119 C 137 -90 100 -34 130 24 C 165 86 120 131 62 137 C 15 143 5 115 -47 129 C -114 146 -155 103 -139 58 C -116 4 -139 -86 -110 -125 Z';
 const letter = 'M -65 -69 L -21 -69 L 1 24 L 43 -69 L 84 -69 L 21 80 Q 12 99 -10 88 L -28 78 Z';
 
-export default function VLogo({ motion }: { motion: boolean }) {
+export default function VLogo({ motion, tiltEnabled = true }: { motion: boolean; tiltEnabled?: boolean }) {
   const finish = useId();
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = root.current;
-    const stage = el?.closest('.cd-stage');
-    if (!motion || !el || !stage) return;
-    const layers = el.querySelectorAll('.cd-v-layer');
-    const logo = el.querySelector('.cd-v-mark');
-    const ctx = gsap.context(() => {
-      gsap.to('.cd-v-float', { y: -9, rotation: 3, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-    }, el);
-    const move = (event: PointerEvent) => {
-      if (event.pointerType === 'touch') return;
-      const box = stage.getBoundingClientRect();
-      const x = (event.clientX - box.left) / box.width - .5;
-      const y = (event.clientY - box.top) / box.height - .5;
-      const mark = logo as HTMLElement;
-      const reachX = Math.max(0, box.width / 2 - mark.offsetWidth / 2 - 24);
-      const reachY = Math.max(0, box.height / 2 - mark.offsetHeight / 2 - 70);
-      const followX = gsap.utils.clamp(-reachX, reachX, x * box.width * .8);
-      const followY = gsap.utils.clamp(-reachY, reachY, y * box.height * .8);
-      // SVG contours and the HTML logo share the same screen-space destination.
+    const stage = el?.closest<HTMLElement>('.cd-stage');
+    const logo = el?.querySelector<HTMLElement>('.cd-v-mark');
+    if (!motion || !el || !stage || !logo) return;
+    const layers = Array.from(el.querySelectorAll<SVGGElement>('.cd-v-layer'));
+    const mobile = window.matchMedia('(hover: none) and (pointer: coarse)');
+    let box = stage.getBoundingClientRect();
+    let neutral: { beta: number; gamma: number } | null = null;
+    let visible = true;
+    let active = true;
+    let lastTilt = 0;
+    const ctx = gsap.context(() => {}, el);
+    // Reuse the same tweens for every input event instead of allocating new ones.
+    const createFollow = () => {
+      gsap.set(layers, { svgOrigin: '0 0' });
+      const layerMoves = layers.map((layer, index) => {
+        const options = { duration: 1.15 - index * .07, ease: 'power3.out' };
+        return { x: gsap.quickTo(layer, 'x', options), y: gsap.quickTo(layer, 'y', options), rotation: gsap.quickTo(layer, 'rotation', options) };
+      });
+      const options = { duration: .65, ease: 'power3.out' };
+      return {
+        layers: layerMoves,
+        x: gsap.quickTo(logo, 'x', options), y: gsap.quickTo(logo, 'y', options),
+        rx: gsap.quickTo(logo, 'rotationX', options), ry: gsap.quickTo(logo, 'rotationY', options), rz: gsap.quickTo(logo, 'rotationZ', options),
+      };
+    };
+    let follow: ReturnType<typeof createFollow>;
+    ctx.add(() => { follow = createFollow(); });
+    let float: gsap.core.Tween;
+    let glow: gsap.core.Tween;
+    ctx.add(() => {
+      float = gsap.to('.cd-v-float', { y: -7, rotation: 1.6, duration: 3.8, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      glow = gsap.to('.cd-v-glow', { scale: 1.07, opacity: .72, duration: 4.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    });
+    const animate = (x: number, y: number) => {
+      const travelX = box.width * .4;
+      const travelY = box.height * .4;
+      const px = gsap.utils.clamp(-1, 1, x);
+      const py = gsap.utils.clamp(-1, 1, y);
+      const reachX = Math.max(0, box.width / 2 - logo.offsetWidth / 2 - 24);
+      const reachY = Math.max(0, box.height / 2 - logo.offsetHeight / 2 - 70);
+      const followX = gsap.utils.clamp(-reachX, reachX, px * travelX);
+      const followY = gsap.utils.clamp(-reachY, reachY, py * travelY);
       const svgScale = Math.max(box.width / 1600, box.height / 1000);
-      layers.forEach((layer, i) => {
-        const depth = .35 + i * .13;
-        gsap.to(layer, {
-          x: followX * depth / svgScale, y: followY * depth / svgScale,
-          rotation: x * (5 - i), svgOrigin: '0 0',
-          duration: 1.15 - i * .1, ease: 'power3.out', overwrite: 'auto',
-        });
+      follow.layers.forEach((move, index) => {
+        const depth = .35 + index * .13;
+        move.x(followX * depth / svgScale);
+        move.y(followY * depth / svgScale);
+        move.rotation(px * (5 - index) / 2);
       });
-      gsap.to(logo, {
-        rotationY: x * 35, rotationX: -y * 25, rotationZ: x * 8,
-        x: followX,
-        y: followY,
-        duration: .65, ease: 'power3.out', overwrite: 'auto',
-      });
+      follow.x(followX); follow.y(followY);
+      follow.rx(-py * 12.5); follow.ry(px * 17.5); follow.rz(px * 4);
     };
-    const reset = () => {
-      gsap.to(layers, { x: 0, y: 0, rotation: 0, duration: 1, overwrite: 'auto' });
-      gsap.to(logo, { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 1, overwrite: 'auto' });
+    const reset = () => { neutral = null; animate(0, 0); };
+    const sync = () => {
+      const next = visible && !document.hidden && Number(gsap.getProperty(el.parentElement, 'opacity')) > .08;
+      if (active === next) return;
+      active = next;
+      float.paused(!active); glow.paused(!active);
+      if (!active) reset();
     };
-    stage.addEventListener('pointermove', move as EventListener);
+    const resize = new ResizeObserver(() => { box = stage.getBoundingClientRect(); reset(); });
+    resize.observe(stage);
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });
+    observer.observe(stage);
+    const move = (event: PointerEvent) => {
+      if (!active || event.pointerType !== 'mouse') return;
+      // The sticky stage stays at viewport top while its portal is visible.
+      animate((event.clientX - box.left) / box.width * 2 - 1, (event.clientY - box.top) / box.height * 2 - 1);
+    };
+    const tilt = (event: DeviceOrientationEvent) => {
+      if (!active || !tiltEnabled || !mobile.matches || event.beta == null || event.gamma == null) return;
+      const now = performance.now();
+      if (now - lastTilt < 32) return;
+      lastTilt = now;
+      if (!neutral) neutral = { beta: event.beta, gamma: event.gamma };
+      const angle = (screen.orientation?.angle ?? 0) * Math.PI / 180;
+      const dx = ((event.gamma - neutral.gamma + 540) % 360) - 180;
+      const dy = ((event.beta - neutral.beta + 540) % 360) - 180;
+      animate((dx * Math.cos(angle) + dy * Math.sin(angle)) / 35, (dy * Math.cos(angle) - dx * Math.sin(angle)) / 45);
+    };
+    window.addEventListener('deviceorientation', tilt, { passive: true });
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('blur', reset);
+    screen.orientation?.addEventListener('change', reset);
+    document.addEventListener('visibilitychange', sync);
+    stage.addEventListener('pointermove', move);
     stage.addEventListener('pointerleave', reset);
+    sync();
     return () => {
-      stage.removeEventListener('pointermove', move as EventListener);
+      resize.disconnect(); observer.disconnect();
+      window.removeEventListener('deviceorientation', tilt);
+      window.removeEventListener('scroll', sync);
+      window.removeEventListener('blur', reset);
+      screen.orientation?.removeEventListener('change', reset);
+      document.removeEventListener('visibilitychange', sync);
+      stage.removeEventListener('pointermove', move);
       stage.removeEventListener('pointerleave', reset);
-      gsap.killTweensOf([...layers, logo]);
       ctx.revert();
-      gsap.set([...layers, logo], { clearProps: 'transform' });
     };
-  }, [motion]);
+  }, [motion, tiltEnabled]);
   return <div className="cd-v-scene" ref={root} aria-hidden="true">
     <svg className="cd-v-contours" viewBox="-800 -500 1600 1000" preserveAspectRatio="xMidYMid slice">
       {[6.2, 4.7, 3.5, 2.55, 1.8, 1.2].map((scale, i) => <g className="cd-v-layer" key={scale}><path d={contour} transform={`scale(${scale})`} fill={['#D5360C','#DF623D','#D5360C','#DF623D','#D5360C','#E6D5BD'][i]} stroke={i === 5 ? '#E6D5BD' : '#B32D0A'} strokeWidth="3" /></g>)}
