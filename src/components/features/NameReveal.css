@@ -1,0 +1,58 @@
+/* Scoped to the name reveal: the V scene and its scroll choreography stay independent. */
+.cd-reveal.nr-reveal{width:min(900px,92%);max-width:900px;padding:22px 35px;text-align:center;visibility:hidden;pointer-events:none;color:#ecdcc3}
+.nr-reveal .nr-kicker{display:block;font:10px/1.5 monospace;letter-spacing:2.6px;color:#ecdcc3}
+.nr-badge{position:relative;display:table;margin:24px auto 20px;padding:10px 24px 10px 43px;background:#f0e1c8;color:#141310;border:2px solid #141310;border-radius:40px;box-shadow:4px 6px #141310;transform:rotate(-5deg);font:700 12px/1.3 monospace;letter-spacing:.8px}
+.nr-character{position:absolute;display:block;pointer-events:none;filter:drop-shadow(2px 4px 0 #17151030)}.nr-character svg{display:block;width:100%;height:100%;overflow:visible}
+.nr-coder{width:76px;height:76px;left:-35px;top:-20px;transform:rotate(-12deg);animation:nr-nod 4.7s ease-in-out infinite}
+.nr-name{position:relative;width:fit-content;max-width:100%;margin:auto}.cd-reveal.nr-reveal h1{font-family:'Barlow Condensed',Impact,sans-serif;font-size:clamp(82px,10.8vw,146px);font-weight:900;line-height:.84;letter-spacing:-.035em;margin:0;color:#11110f}
+.cd-reveal.nr-reveal h1 em{display:block;font-style:normal;font-size:.61em;line-height:1.07;letter-spacing:-.025em;color:#efdfc6;text-shadow:2px 2px #141310,3px 4px #141310,4px 6px #141310;margin-top:7px}
+.nr-star{width:65px;height:65px;right:-75px;top:2%;animation:nr-twinkle 5s ease-in-out infinite}.nr-cool{width:54px;height:54px;left:-76px;bottom:8px;animation:nr-float 5.5s ease-in-out infinite}
+.nr-underline{display:block;width:38%;height:18px;margin:10px auto 13px;color:#f0dfc5}
+.nr-message{position:relative;width:fit-content;max-width:90%;margin:auto}.nr-message h2{font:800 clamp(25px,3.1vw,39px)/1.05 system-ui,sans-serif;letter-spacing:-1.2px;margin:0;color:#f2e3cd}.nr-rocket{width:78px;height:78px;right:-100px;top:-3px;animation:nr-flight 4s ease-in-out infinite}
+.nr-reveal p.nr-description{font:13px/1.65 monospace;max-width:none;margin:14px auto 0;color:#f2e3cd}.nr-mobile-break{display:none}
+.nr-reveal a.nr-cta{position:relative;display:inline-flex;align-items:center;gap:24px;margin-top:22px;padding:10px 12px 10px 26px;background:#f0e1c8;color:#151410;border:2px solid #151410;border-radius:50px;box-shadow:4px 6px #151410;font:700 18px/1.2 monospace;pointer-events:none;transition:transform .18s,box-shadow .18s}
+.nr-arrow{display:grid;place-items:center;width:38px;height:38px;background:#171610;color:#f0e1c8;border-radius:50%;transition:transform .2s}.nr-arrow svg{width:24px;height:24px}.nr-hand{width:53px;height:53px;right:-22px;top:-35px;transform:rotate(15deg);transform-origin:50% 95%;animation:nr-wave 5s ease-in-out infinite}
+.nr-reveal[data-revealed=true] a.nr-cta,.cd-still .nr-reveal a.nr-cta{pointer-events:auto}.nr-cta:hover{transform:translate(2px,3px);box-shadow:2px 3px #151410!important}.nr-cta:hover .nr-arrow{transform:rotate(12deg)}.nr-cta:hover .nr-hand{animation-duration:1s}
+.nr-eyes{transform-box:fill-box;transform-origin:center;animation:nr-blink 5.2s ease-in-out infinite}.nr-flame{transform-box:fill-box;transform-origin:top center;animation:nr-fire .7s ease-in-out infinite alternate}
+.nr-reveal .nr-character,.nr-reveal .nr-eyes,.nr-reveal .nr-flame{animation-play-state:paused}.nr-reveal[data-onscreen=true][data-revealed=true] .nr-character,.nr-reveal[data-onscreen=true][data-revealed=true] .nr-eyes,.nr-reveal[data-onscreen=true][data-revealed=true] .nr-flame{animation-play-state:running}
+.cd-still .nr-reveal{visibility:visible}.cd-still .nr-reveal *{animation:none!important;transition:none!important}
+@keyframes nr-nod{0%,70%,100%{transform:rotate(-12deg)}80%{transform:rotate(0) translateY(-3px)}90%{transform:rotate(-16deg)}}
+@keyframes nr-twinkle{0%,100%{transform:rotate(-12deg) scale(.95)}50%{transform:rotate(12deg) scale(1.06)}}
+@keyframes nr-float{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-7px) rotate(0)}}
+@keyframes nr-flight{0%,100%{transform:translate(0,0) rotate(-5deg)}50%{transform:translate(5px,-8px) rotate(3deg)}}
+@keyframes nr-wave{0%,65%,100%{transform:rotate(15deg)}72%,86%{transform:rotate(-8deg)}79%,93%{transform:rotate(24deg)}}
+@keyframes nr-blink{0%,42%,48%,100%{transform:scaleY(1)}45%{transform:scaleY(.12)}}
+@keyframes nr-fire{from{transform:scale(.85,.85)}to{transform:scale(1.05,1.1)}}
+@media(max-width:650px){.cd-reveal.nr-reveal{width:100%;padding:20px 7%}.nr-reveal .nr-kicker{font-size:8px;letter-spacing:1.3px}.nr-badge{font-size:9px;padding:9px 15px 9px 32px;margin:27px auto 23px;letter-spacing:.4px}.nr-coder{width:61px;height:61px;left:-29px;top:-17px}.cd-reveal.nr-reveal h1{font-size:clamp(73px,22vw,135px);letter-spacing:-.035em;line-height:.84}.cd-reveal.nr-reveal h1 em{font-size:.54em;line-height:1.12;margin-top:8px;text-shadow:2px 3px #141310,3px 4px #141310}.nr-star{width:38px;height:38px;right:-25px;top:-18px}.nr-cool{width:36px;height:36px;left:-15px;bottom:-29px}.nr-underline{width:48%;margin:11px auto 20px;height:13px}.nr-message{max-width:100%}.nr-message h2{font-size:clamp(23px,6.7vw,36px);letter-spacing:-.8px}.nr-rocket{width:44px;height:44px;right:-31px;top:-25px}.nr-reveal p.nr-description{font-size:11px;line-height:1.7;margin-top:15px}.nr-mobile-break{display:block}.nr-reveal a.nr-cta{font-size:14px;gap:14px;margin-top:23px;padding:9px 10px 9px 20px;min-height:52px}.nr-arrow{width:32px;height:32px}.nr-arrow svg{width:22px;height:22px}.nr-hand{width:43px;height:43px;right:-15px;top:-30px}}
+
+@media(max-height:620px) and (max-width:650px){.nr-badge{margin:18px auto}.cd-reveal.nr-reveal h1{font-size:19vw}.nr-underline{margin-bottom:10px}.nr-message h2{font-size:23px}.nr-reveal p.nr-description{margin-top:10px}.nr-reveal a.nr-cta{margin-top:16px}}
+@media(max-height:480px) and (orientation:landscape){.cd-reveal.nr-reveal{padding:8px;width:90%}.nr-reveal .nr-kicker{font-size:7px}.nr-badge{margin:10px auto;padding:5px 15px 5px 29px;font-size:8px}.nr-coder{width:47px;height:47px;top:-12px;left:-22px}.cd-reveal.nr-reveal h1{font-size:66px}.nr-underline{margin:6px auto;height:8px}.nr-message h2{font-size:20px}.nr-reveal p.nr-description{font-size:10px;line-height:1.3;margin-top:8px}.nr-reveal a.nr-cta{margin-top:10px;font-size:13px;padding:5px 10px 5px 17px;min-height:42px}.nr-arrow{width:28px;height:28px}.nr-star,.nr-rocket{width:45px;height:45px}.nr-cool{width:40px;height:40px}}
+@media(prefers-reduced-motion:reduce){.nr-reveal *{animation:none!important;transition:none!important}}
+
+/* Let the desktop poster use the available screen, including shorter laptops. */
+@media(min-width:651px) and (min-height:481px){
+ .cd-reveal.nr-reveal{width:min(1120px,94%);max-width:1120px;padding:14px 38px}
+ .cd-reveal.nr-reveal h1{font-size:clamp(120px,min(18vw,24svh),230px)}
+ .cd-reveal.nr-reveal h1 em{font-size:.64em;margin-top:5px}
+ .nr-reveal .nr-kicker{font-size:11px;letter-spacing:3px}
+ .nr-badge{font-size:14px;padding:11px 28px 11px 49px;margin:17px auto 15px}
+ .nr-coder{width:86px;height:86px;left:-39px;top:-22px}
+ .nr-star{width:82px;height:82px;right:-92px}
+ .nr-cool{width:70px;height:70px;left:-89px;bottom:13px}
+ .nr-underline{width:48%;height:19px;margin:10px auto 13px}
+ .nr-message h2{font-size:clamp(30px,min(4vw,5.8svh),48px)}
+ .nr-rocket{width:95px;height:95px;right:-117px;top:-8px}
+ .nr-reveal p.nr-description{font-size:15px;line-height:1.6;margin-top:15px}
+ .nr-reveal a.nr-cta{font-size:20px;gap:30px;padding:11px 13px 11px 30px;margin-top:26px}
+ .nr-arrow{width:42px;height:42px}.nr-arrow svg{width:28px;height:28px}
+ .nr-hand{width:62px;height:62px;right:-36px;top:-30px}
+}
+@media(min-width:651px) and (min-height:481px) and (max-height:650px){
+ .cd-reveal.nr-reveal h1{font-size:min(17vw,24svh)}
+ .nr-badge{margin:15px auto;font-size:12px;padding-top:8px;padding-bottom:8px}
+ .nr-reveal .nr-kicker{font-size:9px}
+ .nr-message h2{font-size:29px}.nr-reveal p.nr-description{font-size:13px;margin-top:10px}
+ .nr-reveal a.nr-cta{margin-top:17px;padding-top:7px;padding-bottom:7px;font-size:18px}
+ .nr-coder{width:70px;height:70px;top:-17px}
+}
+.cd-reveal.nr-reveal h1{margin:0}
