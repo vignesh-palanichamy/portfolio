@@ -1,6 +1,5 @@
 import { MarqueeText } from '@/components/common/MarqueeText';
 import { Sparkles, BookOpen, ShoppingBag, Box } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const skills = [
   'Interactive Storytelling & Web Motion',

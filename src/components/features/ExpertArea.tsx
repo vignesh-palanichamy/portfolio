@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { 
   Code2, Globe, Layers, Database, Sparkles, Terminal, 
-  ShoppingBag, Palette, Move, Compass 
+  ShoppingBag, Palette, Move 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ToolItem {
   name: string;
   category: 'Core' | '3D & Motion' | 'E-Commerce & Web' | 'Backend & Data';
-  icon: any;
+  icon: typeof Code2;
   highlight: string;
   color: string;
 }

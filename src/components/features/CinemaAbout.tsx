@@ -1,5 +1,4 @@
 import profileImage from '@/assets/vignesh-about-selected.png';
-import signature from '@/assets/signature.png';
 import { ArrowUpRight, Code2, Box, Sparkles } from 'lucide-react';
 
 export default function CinemaAbout() {
@@ -10,7 +9,13 @@ export default function CinemaAbout() {
       <figure className="cd-about-photo">
         <span className="cd-about-tape" aria-hidden="true"/>
         <div className="cd-about-photo-wrap"><img src={profileImage} alt="Vignesh Palanichamy" loading="lazy" width="1120" height="1400"/></div>
-        <figcaption><span>HI, I’M VIGNESH.</span><img src={signature} alt="" loading="lazy"/></figcaption>
+        <figcaption><span>HI, I’M VIGNESH.</span><svg className="cd-about-doodle" viewBox="0 0 104 76" aria-hidden="true">
+          <path d="M47 8 59 23 81 17 76 37 92 51 69 55 58 72 44 57 23 62 27 42 12 29 34 25Z" fill="#D5360C"/>
+          <path d="M42 3 54 18 76 12 71 32 87 46 64 50 53 67 39 52 18 57 22 37 7 24 29 20Z" fill="#E6D5BD" stroke="#101010" strokeWidth="3" strokeLinejoin="round"/>
+          <ellipse cx="36" cy="30" rx="3" ry="5" fill="#101010" transform="rotate(-12 36 30)"/>
+          <path d="m49 28 7 2-6 3M34 40q10 13 23-1" fill="none" stroke="#101010" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="m87 9 5-5m-2 17 8-1M8 52l-5 4" fill="none" stroke="#D5360C" strokeWidth="3" strokeLinecap="round"/>
+        </svg></figcaption>
         <span className="cd-about-sticker">ALWAYS<br/>EXPLORING ↗</span>
       </figure>
       <div className="cd-about-story">

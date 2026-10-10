@@ -130,7 +130,7 @@ URL: https://xgdzyqfalbibzelpdpvr.supabase.co/functions/v1/mcp`;
             ].map((tool) => (
               <button
                 key={tool.id}
-                onClick={() => setSelectedTool(tool.id as any)}
+                onClick={() => setSelectedTool(tool.id as typeof selectedTool)}
                 className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all ${
                   selectedTool === tool.id
                     ? 'border-white/50 bg-white/10 shadow-lg text-white'

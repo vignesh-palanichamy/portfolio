@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Heart, Mail, Phone, Send, Sparkles } from 'lucide-react';
+import { Mail, Phone, Send, Sparkles } from 'lucide-react';
 import signatureImg from '@/assets/signature.png';
 import { EarAccent } from '@/components/reactbits/OrganicBlob';
 import { motion } from 'framer-motion';

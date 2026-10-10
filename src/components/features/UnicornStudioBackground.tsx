@@ -26,7 +26,7 @@ export const UnicornStudioBackground = ({
     console.log('UnicornStudio: Initializing background animation with project ID:', projectId);
 
     let pollTimer: number | undefined;
-    let pollStart = Date.now();
+    const pollStart = Date.now();
     const POLL_TIMEOUT = 8000;
     const POLL_INTERVAL = 150;
 

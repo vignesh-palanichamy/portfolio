@@ -24,7 +24,7 @@ export const DecryptedText: React.FC<DecryptedTextProps> = ({
   animateOn = "hover",
 }) => {
   const [displayText, setDisplayText] = useState(text);
-  const [isHovering, setIsHovering] = useState(false);
+  const [, setIsHovering] = useState(false);
   const [isScrambling, setIsScrambling] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 

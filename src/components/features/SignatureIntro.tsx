@@ -1,71 +1,78 @@
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from "react";
-import { RotateCcw } from "lucide-react";
-import signature from "@/assets/signature.png";
-import strokes from "@/assets/signature-strokes.json";
-import "./SignatureIntro.css";
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import signature from '@/assets/signature.png';
 
-export function SignatureIntro() {
-  const [active, setActive] = useState(true);
-  const [leaving, setLeaving] = useState(false);
-  const [run, setRun] = useState(0);
-  const [reduced, setReduced] = useState(false);
-  const replay = useRef<HTMLButtonElement>(null);
-  const skip = useRef<HTMLButtonElement>(null);
-  const maskId = useId().replace(/:/g, "");
-  const finish = useCallback(() => setLeaving(true), []);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!active) return;
-    const bodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const main = document.getElementById("portfolio-content");
-    main?.setAttribute("inert", "");
-    skip.current?.focus({ preventScroll: true });
-    const timer = window.setTimeout(finish, reduced ? 650 : 5100);
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") finish();
-      if (event.key === "Tab") { event.preventDefault(); skip.current?.focus(); }
+export default function SignatureIntro({ motion }: { motion: boolean }) {
+  const overlay=useRef<HTMLDivElement>(null);
+  const audio=useRef<HTMLAudioElement>(null);
+  useEffect(()=>{
+    const element=overlay.current;
+    const sound=audio.current;
+    if(!motion||!element||!sound)return;
+    let alive=true;
+    let introActive=true;
+    let played=false;
+    let pending=false;
+    sound.volume=1;
+    sound.currentTime=0;
+    element.dataset.sound='loading';
+    const play=()=>{
+      if(!alive||!introActive||played||pending||document.hidden)return;
+      pending=true;
+      void sound.play().then(()=>{
+        pending=false;
+        if(!alive||!introActive||document.hidden){sound.pause();return;}
+        played=true;
+        element.dataset.sound='playing';
+        removeRetry();
+      }).catch((error: DOMException)=>{
+        pending=false;
+        if(!alive||!introActive)return;
+        element.dataset.sound=error.name==='NotAllowedError'?'blocked':error.name==='AbortError'?'loading':'error';
+      });
     };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = bodyOverflow;
-      main?.removeAttribute("inert");
-      window.clearTimeout(timer);
-      window.removeEventListener("keydown", onKey);
+    const stop=()=>{
+      sound.pause();
     };
-  }, [active, run, reduced, finish]);
-
-  useEffect(() => {
-    if (!leaving) return;
-    const timer = window.setTimeout(() => {
-      setActive(false);
-      window.requestAnimationFrame(() => replay.current?.focus({ preventScroll: true }));
-    }, reduced ? 0 : 650);
-    return () => window.clearTimeout(timer);
-  }, [leaving, reduced]);
-
-  return <>
-    {active && <div key={run} className={`signature-intro ${leaving ? "signature-intro--leaving" : ""} ${reduced ? "signature-intro--still" : ""}`} role="dialog" aria-modal="true" aria-label="Welcome to Vignesh’s portfolio">
-      <div className="signature-intro-art">
-        <svg viewBox="0 0 994 321" role="img" aria-label="Vignesh Palanichamy’s signature" className="signature-intro-svg">
-          <defs><mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="994" height="321">
-            {strokes.map((stroke, index) => <path key={index} className="signature-ink-reveal" d={stroke.d} fill="none" stroke="white" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" pathLength="1" style={{ "--stroke-delay": `${stroke.delay}s`, "--stroke-duration": `${stroke.duration}s` } as CSSProperties} />)}
-            <rect className="signature-ink-finish" width="994" height="321" fill="white" />
-          </mask></defs>
-          <image href={signature} width="994" height="321" mask={`url(#${maskId})`} style={{ filter: "brightness(0)" }} />
-        </svg>
-        <p className="signature-intro-caption">A little of me. In everything I build.</p>
-      </div>
-      <button ref={skip} type="button" className="signature-intro-skip" onClick={finish}>Skip intro <span aria-hidden="true">↗</span></button>
-    </div>}
-    {!active && <button ref={replay} type="button" className="signature-intro-replay" onClick={() => { setLeaving(false); setRun(value => value + 1); setActive(true); }}><RotateCcw size={12} aria-hidden="true" /> Replay intro</button>}
-  </>;
+    const retry=(event: Event)=>{
+      if(event.type==='pointerdown'&&(event as PointerEvent).pointerType==='touch')return;
+      if(event.isTrusted&&element.dataset.sound!=='error')play();
+    };
+    const removeRetry=()=>{
+      document.removeEventListener('pointerdown',retry);
+      document.removeEventListener('pointerup',retry);
+      document.removeEventListener('touchend',retry);
+      document.removeEventListener('keydown',retry);
+    };
+    const complete=()=>{
+      introActive=false;
+      removeRetry();
+      sound.removeEventListener('canplay',play);
+      stop();
+    };
+    const hidden=()=>{
+      if(document.hidden)stop();
+      else if(!played && element.dataset.sound!=='blocked')play();
+    };
+    document.addEventListener('visibilitychange',hidden);
+    document.addEventListener('pointerdown',retry);
+    document.addEventListener('pointerup',retry);
+    document.addEventListener('touchend',retry,{passive:true});
+    document.addEventListener('keydown',retry);
+    const ctx=gsap.context(()=>{
+      gsap.timeline()
+        .set(element,{autoAlpha:1})
+        .fromTo('.cd-signature',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:1.8,ease:'power2.inOut'})
+        .to(element,{autoAlpha:0,duration:.7,onComplete:complete},2);
+    },overlay);
+    if(sound.readyState>=3)play();
+    else {sound.addEventListener('canplay',play,{once:true});sound.load();}
+    return()=>{
+      alive=false;complete();
+      document.removeEventListener('visibilitychange',hidden);
+      ctx.revert();
+    };
+  },[motion]);
+  if(!motion)return null;
+  return <div ref={overlay} className="cd-opening" aria-hidden="true"><audio ref={audio} src="/audio/loader-digital-sweep-pop.wav" preload="auto"/><img className="cd-signature" src={signature} alt=""/><span>A LITTLE OF ME. IN EVERYTHING I BUILD.</span></div>;
 }

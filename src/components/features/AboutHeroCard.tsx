@@ -57,13 +57,13 @@ export const AboutHeroCard = () => {
             <div className="liquid-glass-inner rounded-2xl p-4 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider">
                 <GraduationCap className="w-4 h-4 text-gray-700" />
-                <span>Education History</span>
+                <span role="heading" aria-level={2}>Education History</span>
               </div>
               <div className="space-y-3 pt-1">
                 {educationData.map((edu, idx) => (
                   <div key={idx} className="text-xs space-y-0.5">
                     <span className="text-muted-foreground text-[11px] block">{edu.period}</span>
-                    <h5 className="font-semibold text-foreground/90">{edu.degree}</h5>
+                    <h3 className="font-semibold text-foreground/90">{edu.degree}</h3>
                     <p className="text-muted-foreground/80 text-[11px]">{edu.institution}</p>
                   </div>
                 ))}
@@ -78,9 +78,9 @@ export const AboutHeroCard = () => {
               <span className="text-xs font-mono uppercase tracking-widest text-primary/70 mb-1 block">
                 Full Stack Developer • 3D & WebGL
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 tracking-tight">
                 Vignesh Palanichamy
-              </h2>
+              </h1>
               <p className="text-foreground/75 text-sm sm:text-base leading-relaxed">
                 Hello, I'm Vignesh Palanichamy, a Full Stack Developer passionate about building fast, scalable, and user-friendly web applications. I primarily work with React.js, Next.js, Node.js, and MongoDB to develop modern full-stack solutions with clean UI and efficient backend systems. I also enjoy exploring interactive web experiences using Three.js and WebGL. I'm a quick learner who enjoys solving real-world problems and turning ideas into practical digital products.
               </p>
@@ -88,17 +88,17 @@ export const AboutHeroCard = () => {
 
             {/* Experience Section */}
             <div className="space-y-5">
-              <h3 className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider font-mono">
+              <h2 className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider font-mono">
                 WORK EXPERIENCE
-              </h3>
+              </h2>
               
               <div className="space-y-4">
                 {experienceData.map((exp, index) => (
                   <div key={index} className="liquid-glass-inner rounded-2xl p-4 border border-white/5 space-y-1.5">
                     <div className="flex flex-wrap items-center justify-between gap-1">
-                      <h4 className="text-foreground/95 text-sm sm:text-base font-semibold">
+                      <h3 className="text-foreground/95 text-sm sm:text-base font-semibold">
                         {exp.title}
-                      </h4>
+                      </h3>
                       <span className="text-primary/70 font-mono text-[11px]">
                         {exp.period}
                       </span>

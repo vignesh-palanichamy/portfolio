@@ -1,0 +1,8 @@
+Writing_Pen_01.wav by moai15
+https://freesound.org/people/moai15/sounds/336382/
+License: CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/
+Source: high-quality MP3 preview. Playback uses first 1.8 seconds with volume envelope.
+
+loader-digital-sweep-pop.wav
+Original procedurally synthesized digital sweep and pop created for this portfolio.
+Duration: 1.8 seconds; mono PCM WAV, 44.1 kHz. No third-party samples.

@@ -4,6 +4,8 @@ import { BloomEffect, ChromaticAberrationEffect, EffectComposer, EffectPass, Ren
 import * as faceapi from 'face-api.js';
 import './GridScan.css';
 
+type PermissionOrientationEvent = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
+
 const vert = `
 varying vec2 vUv;
 void main(){
@@ -420,10 +422,10 @@ export const GridScan: React.FC<GridScanProps> = ({
         enableGyro &&
         typeof window !== 'undefined' &&
         'DeviceOrientationEvent' in window &&
-        (DeviceOrientationEvent as any).requestPermission
+        (DeviceOrientationEvent as PermissionOrientationEvent).requestPermission
       ) {
         try {
-          await (DeviceOrientationEvent as any).requestPermission();
+          await (DeviceOrientationEvent as PermissionOrientationEvent).requestPermission();
         } catch {
           // noop
         }
@@ -529,7 +531,7 @@ export const GridScan: React.FC<GridScanProps> = ({
         luminanceThreshold: bloomThreshold,
         luminanceSmoothing: bloomSmoothing
       });
-      (bloom.blendMode.opacity as any).value = Math.max(0, bloomIntensity);
+      bloom.blendMode.opacity.value = Math.max(0, bloomIntensity);
       bloomRef.current = bloom;
 
       const chroma = new ChromaticAberrationEffect({
@@ -670,9 +672,9 @@ export const GridScan: React.FC<GridScanProps> = ({
       u.uLightMode.value = lightMode ? 1 : 0;
     }
     if (bloomRef.current) {
-      (bloomRef.current.blendMode.opacity as any).value = Math.max(0, bloomIntensity);
-      (bloomRef.current as any).luminanceMaterial.threshold = bloomThreshold;
-      (bloomRef.current as any).luminanceMaterial.smoothing = bloomSmoothing;
+      bloomRef.current.blendMode.opacity.value = Math.max(0, bloomIntensity);
+      bloomRef.current.luminanceMaterial.threshold = bloomThreshold;
+      bloomRef.current.luminanceMaterial.smoothing = bloomSmoothing;
     }
     if (chromaRef.current) {
       chromaRef.current.offset.set(chromaticAberration, chromaticAberration);
@@ -816,7 +818,7 @@ export const GridScan: React.FC<GridScanProps> = ({
         }
 
         if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
-          (video as any).requestVideoFrameCallback(() => detect(performance.now()));
+          video.requestVideoFrameCallback(() => detect(performance.now()));
         } else {
           requestAnimationFrame(detect);
         }

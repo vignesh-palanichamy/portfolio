@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { MapPin, Phone, Mail, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { TextReveal3D } from "@/components/reactbits/TextReveal3D";
 
 export const ContactInfoCard = () => {
