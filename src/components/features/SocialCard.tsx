@@ -5,27 +5,22 @@ import { motion } from 'framer-motion';
 interface SocialCardProps {
   name: string;
   icon: LucideIcon;
-  href: string;
+  href?: string;
   badge?: string;
   accentColor?: string;
+  disabled?: boolean;
 }
 
 export const SocialCard = ({
   name,
   icon: Icon,
-  href,
+  href = '#',
   badge,
   accentColor = '#00ecef',
-}: SocialCardProps) => (
-  <CardEffects>
-    <motion.a
-      href={href}
-      target={href.startsWith('http') ? '_blank' : undefined}
-      rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      className="social-row liquid-glass group relative flex items-center gap-3.5 rounded-2xl px-4 py-3.5 overflow-hidden transition-all duration-300"
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
-    >
+  disabled = false,
+}: SocialCardProps) => {
+  const inner = (
+    <>
       {/* Aardvark-style sweep fill reveal on hover */}
       <span
         className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-none opacity-[0.06]"
@@ -57,6 +52,31 @@ export const SocialCard = ({
           aria-hidden="true"
         />
       </div>
-    </motion.a>
-  </CardEffects>
-);
+    </>
+  );
+
+  return (
+    <CardEffects>
+      {disabled ? (
+        <motion.div
+          aria-disabled="true"
+          className="social-row liquid-glass group relative flex items-center gap-3.5 rounded-2xl px-4 py-3.5 overflow-hidden transition-all duration-300"
+          whileHover={{ y: -2 }}
+        >
+          {inner}
+        </motion.div>
+      ) : (
+        <motion.a
+          href={href}
+          target={href.startsWith('http') ? '_blank' : undefined}
+          rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          className="social-row liquid-glass group relative flex items-center gap-3.5 rounded-2xl px-4 py-3.5 overflow-hidden transition-all duration-300"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          {inner}
+        </motion.a>
+      )}
+    </CardEffects>
+  );
+};

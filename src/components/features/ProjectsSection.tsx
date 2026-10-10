@@ -2,7 +2,7 @@ import React from "react";
 import { ProjectCard } from "./ProjectCard";
 import { ScrollReveal } from "@/components/reactbits/ScrollReveal";
 import { TextReveal3D } from "@/components/reactbits/TextReveal3D";
-import { Sparkles, Layers } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import ScrollStack, { ScrollStackItem } from "@/components/reactbits/ScrollStack";
 
 const projects = [
@@ -23,7 +23,6 @@ const projects = [
     category: "EdTech & Interactive Sandbox",
     description: "Real-time code execution and automated test case evaluation platform built with React, Next.js, Node.js, MongoDB, and Judge0 API.",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
-    link: "https://coder-blush.vercel.app",
     size: "large" as const
   },
   {

@@ -71,8 +71,8 @@ export const ProjectCard = ({
       </ul>
     )}
 
-    {/* Visit link with hover microinteraction */}
-    {link && (
+    {/* Visit link or accessible non-interactive demo status */}
+    {link ? (
       <motion.a
         href={link}
         target="_blank"
@@ -93,6 +93,13 @@ export const ProjectCard = ({
           className="relative z-10 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300"
         />
       </motion.a>
+    ) : (
+      <div
+        className="project-visit mt-4 flex min-h-11 items-center justify-between rounded-xl border border-black/[0.08] bg-white/60 backdrop-blur-md px-4 text-xs font-medium text-gray-400 overflow-hidden relative cursor-default"
+        aria-disabled="true"
+      >
+        <span>Demo unavailable</span>
+      </div>
     )}
   </SpotlightCard>
 );

@@ -34,8 +34,8 @@ const socialLinks = [
     name: "Zenith Mentor Platform",
     badge: "Interactive Code Execution Sandbox",
     icon: ExternalLink,
-    href: "https://coder-blush.vercel.app",
-    accentColor: "#00ecef"
+    accentColor: "#00ecef",
+    disabled: true
   }
 ];
 
