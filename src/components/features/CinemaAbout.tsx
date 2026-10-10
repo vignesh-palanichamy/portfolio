@@ -1,4 +1,4 @@
-import profileImage from '@/assets/profile-image.png';
+import profileImage from '@/assets/vignesh-about-selected.png';
 import signature from '@/assets/signature.png';
 import { ArrowUpRight, Code2, Box, Sparkles } from 'lucide-react';
 
@@ -9,7 +9,7 @@ export default function CinemaAbout() {
     <div className="cd-about-grid">
       <figure className="cd-about-photo">
         <span className="cd-about-tape" aria-hidden="true"/>
-        <div className="cd-about-photo-wrap"><img src={profileImage} alt="Vignesh Palanichamy" loading="lazy" width="600" height="700"/></div>
+        <div className="cd-about-photo-wrap"><img src={profileImage} alt="Vignesh Palanichamy" loading="lazy" width="1120" height="1400"/></div>
         <figcaption><span>HI, I’M VIGNESH.</span><img src={signature} alt="" loading="lazy"/></figcaption>
         <span className="cd-about-sticker">ALWAYS<br/>EXPLORING ↗</span>
       </figure>
