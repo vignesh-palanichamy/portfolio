@@ -8,7 +8,7 @@ const navItems = [
   { name: "Home", href: "/", isExternal: false },
   { name: "About", href: "/about", isExternal: false },
   { name: "Services", href: "/about", hash: "services", isExternal: false },
-  { name: "Projects", href: "/", hash: "projects", isExternal: false },
+  { name: "Projects", href: "/", hash: "demo-work", isExternal: false },
   { name: "Contact", href: "/contact", isExternal: false },
 ]
 
@@ -23,29 +23,7 @@ export function Navbar() {
     setActiveNavItem(null)
   }, [location.pathname])
   
-  const scrollToSection = (sectionId: string) => {
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
-
-  const handleNavClick = (item: typeof navItems[0]) => {
-    if (item.hash) {
-      setActiveNavItem(item.name)
-      if (location.pathname === item.href) {
-        // Same page, just scroll
-        scrollToSection(item.hash);
-      } else {
-        // Different page, navigate then scroll
-        setTimeout(() => scrollToSection(item.hash), 100);
-      }
-    } else {
-      setActiveNavItem(item.name)
-    }
-  };
+  const handleNavClick = (item: typeof navItems[0]) => setActiveNavItem(item.name)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,16 +39,16 @@ export function Navbar() {
     <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-7xl px-4">
       <div className={cn(
         "bg-background/30 backdrop-blur-md border border-border/20 rounded-xl transition-all duration-500 ease-in-out mx-auto",
-        isScrolled ? "md:w-fit md:px-8 w-full" : "w-full"
+        isScrolled ? "lg:w-fit lg:px-8 w-full" : "w-full"
       )}>
         <div className={cn(
           "flex items-center py-4 transition-all duration-500 ease-in-out",
-          isScrolled ? "md:justify-center md:px-0 justify-between px-6" : "justify-between px-6"
+          isScrolled ? "lg:justify-center lg:px-0 justify-between px-6" : "justify-between px-6"
         )}>
           {/* Logo - Hidden when scrolled on md+ screens only */}
           <div className={cn(
             "transition-all duration-500 ease-in-out overflow-hidden",
-            isScrolled ? "md:w-0 md:opacity-0 md:mr-0 w-auto opacity-100 mr-6" : "w-auto opacity-100 mr-6"
+            isScrolled ? "lg:w-0 lg:opacity-0 lg:mr-0 w-auto opacity-100 mr-6" : "w-auto opacity-100 mr-6"
           )}>
             <span className="text-xl font-bold text-primary tracking-tight">
               Vignesh
@@ -78,7 +56,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-6">
             {navItems.map((item) => {
               const isActive = item.hash 
                 ? activeNavItem === item.name 
@@ -86,7 +64,7 @@ export function Navbar() {
               return (
                 <Link
                   key={item.name}
-                  to={item.href}
+                  to={item.hash ? `${item.href}#${item.hash}` : item.href}
                   onClick={() => handleNavClick(item)}
                   className={cn(
                     "text-xs font-medium uppercase tracking-wide transition-all duration-300 whitespace-nowrap px-4 py-2 rounded-full hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.1)] hover:bg-background/10",
@@ -104,7 +82,7 @@ export function Navbar() {
           {/* CTA Button & Mobile Menu - Hidden when scrolled on md+ screens only */}
           <div className={cn(
             "flex items-center space-x-4 transition-all duration-500 ease-in-out overflow-hidden",
-            isScrolled ? "md:w-0 md:opacity-0 md:ml-0 w-auto opacity-100 ml-6" : "w-auto opacity-100 ml-6"
+            isScrolled ? "lg:w-0 lg:opacity-0 lg:ml-0 w-auto opacity-100 ml-6" : "w-auto opacity-100 ml-6"
           )}>
             <Button
               asChild
@@ -119,7 +97,10 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="lg:hidden"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -128,8 +109,8 @@ export function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={cn(
-          "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+        <div id="mobile-navigation" hidden={!isMenuOpen} className={cn(
+          "lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         )}>
           <div className="px-6 py-4 space-y-4 border-t border-border/20">
@@ -140,7 +121,7 @@ export function Navbar() {
               return (
                 <Link
                   key={item.name}
-                  to={item.href}
+                  to={item.hash ? `${item.href}#${item.hash}` : item.href}
                   onClick={() => {
                     handleNavClick(item);
                     setIsMenuOpen(false);

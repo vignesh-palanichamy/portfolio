@@ -9,12 +9,12 @@ export const WorkTogetherSection = () => {
           Let's Work Together
         </h2>
         
-        <div className="flex items-center justify-center gap-2">
+        <a href="mailto:Vigneshpalanichamy.in@gmail.com" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 focus-visible:outline focus-visible:outline-2">
           <span className="text-foreground/90 text-sm font-medium uppercase tracking-wide">
             lets talk
           </span>
           <ArrowUpRight className="w-4 h-4 text-foreground" />
-        </div>
+        </a>
       </Card>
     </section>
   );

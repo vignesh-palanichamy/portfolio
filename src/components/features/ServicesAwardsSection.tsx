@@ -40,7 +40,7 @@ const achievements = [
 
 export const ServicesAwardsSection = () => {
   return (
-    <section id="services" className="w-full max-w-7xl mx-auto px-4 py-4">
+    <section id="services" style={{ scrollMarginTop: 100 }} className="w-full max-w-7xl mx-auto px-4 py-4">
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Services Card */}
         <Card className="liquid-glass rounded-3xl p-5 lg:p-8 border-0">

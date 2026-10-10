@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
 import CinemaDemo from "./pages/CinemaDemo";
 
+import RouteScroll from "./components/layout/RouteScroll";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -20,6 +22,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <RouteScroll />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/projects" element={<Projects />} />
