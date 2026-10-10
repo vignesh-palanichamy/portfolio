@@ -1,5 +1,5 @@
 import profileImage from '@/assets/vignesh-about-selected.png';
-import { ArrowUpRight, Code2, Box, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Code2, Box, Sparkles, Paperclip } from 'lucide-react';
 
 export default function CinemaAbout() {
   return <section id="about-me" className="cd-about" aria-labelledby="cd-about-title">
@@ -26,7 +26,10 @@ export default function CinemaAbout() {
           <div><Box aria-hidden="true"/><p><strong>MAKE ROOM FOR PLAY</strong><span>Exploring 3D, Three.js and WebGL.</span></p></div>
           <div><Sparkles aria-hidden="true"/><p><strong>STAY CURIOUS</strong><span>Studying Industrial Biotechnology at GCT, Coimbatore.</span></p></div>
         </div>
+        <div className="cd-about-actions">
         <a className="cd-about-hello" href="mailto:Vigneshpalanichamy.in@gmail.com">LET’S MAKE SOMETHING <ArrowUpRight size={22} aria-hidden="true"/></a>
+          <a className="cd-about-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="View my resume (PDF, opens in a new tab)"><Paperclip size={20} aria-hidden="true"/>MY RESUME <ArrowUpRight size={20} aria-hidden="true"/></a>
+        </div>
       </div>
     </div>
   </section>;

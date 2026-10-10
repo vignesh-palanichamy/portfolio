@@ -13,26 +13,10 @@ import CinemaProjects from '@/components/features/CinemaProjects';
 import CinemaConnect from '@/components/features/CinemaConnect';
 import './cinema-demo.css';
 
-type MotionPermission = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
-const sensorSupported = () => window.isSecureContext && typeof window.DeviceOrientationEvent !== 'undefined';
-const sensorPermission = () => (window.DeviceOrientationEvent as MotionPermission | undefined)?.requestPermission;
 gsap.registerPlugin(ScrollTrigger);
 export default function CinemaDemo(){
   const root=useRef<HTMLElement>(null);
-  const [tiltEnabled,setTiltEnabled]=useState(()=>sensorSupported()&&!sensorPermission());
-  const [tiltMessage,setTiltMessage]=useState('Enable phone tilt');
-  const [tiltPending,setTiltPending]=useState(false);
-  const enableTilt=async()=>{
-    if (tiltPending || !sensorSupported()) return;
-    setTiltPending(true);
-    try {
-      const sensor=window.DeviceOrientationEvent as MotionPermission | undefined;
-      const permission=await sensor?.requestPermission?.call(sensor);
-      if(!sensor?.requestPermission || permission==='granted') setTiltEnabled(true);
-      else setTiltMessage('Phone tilt unavailable');
-    } catch { setTiltMessage('Retry phone tilt'); }
-    finally { setTiltPending(false); }
-  };
+  const tiltEnabled=window.isSecureContext && typeof window.DeviceOrientationEvent !== 'undefined';
   const [motion,setMotion]=useState(()=>!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   useEffect(()=>{
     const query=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -98,7 +82,6 @@ export default function CinemaDemo(){
       <NameReveal/>
       <div className="cd-intro-actions">
       <a className="cd-scroll" href="#demo-work">SCROLL INTO MY WORLD <ArrowDown size={20}/></a>
-      {motion&&sensorSupported()&&!tiltEnabled&&<button className="cd-tilt-enable" disabled={tiltPending} onClick={enableTilt}>{tiltPending?'Enabling tilt...':tiltMessage}</button>}
 
       </div>
     </div></section>
