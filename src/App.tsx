@@ -12,6 +12,7 @@ import Projects from "./pages/Projects";
 import CinemaDemo from "./pages/CinemaDemo";
 
 import RouteScroll from "./components/layout/RouteScroll";
+import RouteMetadata from "./components/layout/RouteMetadata";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <RouteMetadata />
           <RouteScroll />
           <Routes>
             <Route path="/" element={<Index />} />
