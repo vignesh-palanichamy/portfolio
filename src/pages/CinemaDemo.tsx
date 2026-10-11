@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, Pause, Play } from 'lucide-react';
 import SignatureIntro from '@/components/features/SignatureIntro';
 import VLogo from '@/components/features/VLogo';
+import BrushCursor from '@/components/features/BrushCursor';
 import NameReveal from '@/components/features/NameReveal';
 
 import CinemaAbout from '@/components/features/CinemaAbout';
@@ -76,6 +77,7 @@ export default function CinemaDemo(){
   },[motion]);
   return <main ref={root} className={`cd-demo ${motion?'':'cd-still'}`}>
     <SignatureIntro motion={motion}/>
+    <BrushCursor enabled={motion}/>
     <header className="cd-nav" id="top"><Link to="/projects">PROJECTS ↗</Link><button onClick={()=>setMotion(v=>!v)} aria-pressed={motion}>{motion?<Pause size={16}/>:<Play size={16}/>} Motion {motion?'on':'off'}</button></header>
     <section className="cd-flight" aria-label="Cinematic introduction"><div className="cd-stage">
       <div className="cd-tunnel" aria-hidden="true"><VLogo motion={motion} tiltEnabled={tiltEnabled}/></div>
