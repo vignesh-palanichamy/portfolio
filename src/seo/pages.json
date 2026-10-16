@@ -1,0 +1,27 @@
+{
+  "/": {
+    "title": "Vignesh P | Vignesh Palanichamy – Full Stack Developer",
+    "description": "Vignesh P (Vignesh Palanichamy) builds full-stack web applications with React, Next.js, Node.js and MongoDB, and explores interactive 3D web experiences.",
+    "canonical": "/"
+  },
+  "/cinema-demo": {
+    "title": "Vignesh P | Vignesh Palanichamy – Full Stack Developer",
+    "description": "Vignesh P (Vignesh Palanichamy) builds full-stack web applications with React, Next.js, Node.js and MongoDB, and explores interactive 3D web experiences.",
+    "canonical": "/"
+  },
+  "/about": {
+    "title": "About Vignesh Palanichamy — Full Stack Developer",
+    "description": "Learn about Vignesh Palanichamy’s education, full stack development experience, services and interest in Three.js and WebGL.",
+    "canonical": "/about"
+  },
+  "/projects": {
+    "title": "Projects — Vignesh Palanichamy",
+    "description": "Explore Vignesh Palanichamy’s selected GitHub projects and experiments, with search and language filters.",
+    "canonical": "/projects"
+  },
+  "/contact": {
+    "title": "Contact Vignesh Palanichamy — Full Stack Developer",
+    "description": "Connect with Vignesh Palanichamy by email, phone, GitHub or LinkedIn for full stack development opportunities.",
+    "canonical": "/contact"
+  }
+}

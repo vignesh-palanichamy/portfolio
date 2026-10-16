@@ -1,31 +1,9 @@
+import pageMetadata from '@/seo/pages.json';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const origin = 'https://www.vigneshp.dev';
-const home = {
-  title: 'Vignesh Palanichamy — Full Stack Developer & 3D Web Enthusiast',
-  description: 'Portfolio of Vignesh Palanichamy — Full Stack Developer specializing in React.js, Next.js, Node.js, MongoDB, Three.js & WebGL.',
-  canonical: '/',
-};
-const pages: Record<string, typeof home> = {
-  '/': home,
-  '/cinema-demo': home,
-  '/about': {
-    title: 'About Vignesh Palanichamy — Full Stack Developer',
-    description: 'Learn about Vignesh Palanichamy’s education, full stack development experience, services and interest in Three.js and WebGL.',
-    canonical: '/about',
-  },
-  '/projects': {
-    title: 'Projects — Vignesh Palanichamy',
-    description: 'Explore Vignesh Palanichamy’s selected GitHub projects and experiments, with search and language filters.',
-    canonical: '/projects',
-  },
-  '/contact': {
-    title: 'Contact Vignesh Palanichamy — Full Stack Developer',
-    description: 'Connect with Vignesh Palanichamy by email, phone, GitHub or LinkedIn for full stack development opportunities.',
-    canonical: '/contact',
-  },
-};
+const pages: Record<string, { title: string; description: string; canonical: string }> = pageMetadata;
 
 function setMeta(attribute: 'name' | 'property', key: string, content: string) {
   let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
